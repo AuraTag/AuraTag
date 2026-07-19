@@ -1,0 +1,13 @@
+:root{
+  --bg:#0F1117;
+  --surface:#161B22;
+  --card:#1E2530;
+
+  --gold:#D6B25E;
+  --gold-hover:#E5C97A;
+
+  --text:#F8FAFC;
+  --text-secondary:#94A3B8;
+
+  --border:rgba(255,255,255,.08);
+}

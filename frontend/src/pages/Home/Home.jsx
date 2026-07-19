@@ -1,17 +1,18 @@
-import Navbar from "../../components/Navbar/Navbar";
-import Hero from "../../components/Hero/Hero";
-import Features from "../../components/Features/Features";
-import Footer from "../../components/Footer/Footer";
-
+import CTA from "../../components/CTA/CTA";
 function Home() {
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <Features />
-      <Footer />
-    </>
+    <div className="min-h-screen flex items-center justify-center">
+      <h1 className="text-5xl font-bold">Home Page</h1>
+    </div>
+    
   );
 }
-
+<>
+  <Navbar />
+  <Hero />
+  <Problem />
+  <HowItWorks />
+  <Features />
+  <CTA />
+</>
 export default Home;

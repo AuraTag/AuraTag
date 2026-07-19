@@ -1,7 +1,11 @@
+import LoginForm from "../../components/Login/LoginForm";
+
 function Login() {
-    return (
-        <h1>Login Page</h1>
-    );
+  return (
+    <div className="min-h-screen bg-[#0F1117] flex items-center justify-center px-6">
+      <LoginForm />
+    </div>
+  );
 }
 
 export default Login;
