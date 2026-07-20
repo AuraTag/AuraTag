@@ -1,18 +1,23 @@
+import Navbar from "../../components/Navbar/Navbar";
+import Hero from "../../components/Hero/Hero";
+import Problem from "../../components/Problem/Problem";
+import HowItWorks from "../../components/HowItWorks/HowItWorks";
+import Features from "../../components/Features/Features";
 import CTA from "../../components/CTA/CTA";
+import Footer from "../../components/Footer/Footer";
+
 function Home() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-5xl font-bold">Home Page</h1>
-    </div>
-    
+    <>
+      <Navbar />
+      <Hero />
+      <Problem />
+      <HowItWorks />
+      <Features />
+      <CTA />
+      <Footer />
+    </>
   );
 }
-<>
-  <Navbar />
-  <Hero />
-  <Problem />
-  <HowItWorks />
-  <Features />
-  <CTA />
-</>
+
 export default Home;
