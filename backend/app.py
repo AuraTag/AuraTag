@@ -8,9 +8,9 @@ from database import db
 from routes.auth import auth_bp
 from routes.bottle import bottle_bp
 from routes.verify import verify_bp
-
-from models import Manufacturer, Bottle
-
+from routes.dashboard import dashboard_bp
+from models import Manufacturer, Bottle, BottleScan ,Product
+from routes.product import product_bp
 app = Flask(__name__)
 
 app.config.from_object(Config)
@@ -28,7 +28,11 @@ db.init_app(app)
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(bottle_bp, url_prefix="/api/bottles")
 app.register_blueprint(verify_bp, url_prefix="/api/verify")
-
+app.register_blueprint(
+    dashboard_bp,
+    url_prefix="/api/dashboard"
+)
+app.register_blueprint(product_bp, url_prefix="/api/products")
 # --------------------------
 # Create Database Tables
 # --------------------------

@@ -1,86 +1,101 @@
-import { useEffect, useState } from "react";
-import { getAllBottles } from "../../services/bottleService";
+cimport { useEffect, useState } from "react";
+import { getDashboard } from "../../services/dashboardService";
 import BottleTable from "../../components/Bottle/BottleTable";
 
 function Dashboard() {
 
-    const [bottles, setBottles] = useState([]);
+    const [dashboard, setDashboard] = useState(null);
 
     useEffect(() => {
 
-        fetchBottles();
+        loadDashboard();
 
     }, []);
 
-    const fetchBottles = async () => {
+    const loadDashboard = async () => {
 
         try {
 
-            const data = await getAllBottles();
+            const data = await getDashboard();
 
-            setBottles(data);
+            setDashboard(data);
 
-        } catch (error) {
+        } catch (err) {
 
-            console.error(error);
+            console.error(err);
 
         }
 
     };
 
+    if (!dashboard) {
+
+        return (
+            <div className="text-white p-10">
+                Loading Dashboard...
+            </div>
+        );
+
+    }
+
     return (
 
         <div className="min-h-screen bg-[#0F1117] text-white p-10">
 
-            <h1 className="text-4xl font-bold mb-8">
-                Manufacturer Dashboard
+            <h1 className="text-4xl font-bold mb-10">
+                AuraTag Dashboard
             </h1>
 
-            <div className="grid grid-cols-3 gap-6 mb-10">
+            <div className="grid grid-cols-4 gap-6 mb-10">
 
-                <div className="bg-[#1A1F2B] p-6 rounded-xl">
+                <div className="bg-[#1A1F2B] rounded-xl p-6">
 
-                    <h2 className="text-xl font-semibold">
-                        Total Bottles
-                    </h2>
+                    <h2>Total Bottles</h2>
 
-                    <p className="text-4xl mt-4">
-                        {bottles.length}
+                    <p className="text-5xl font-bold mt-4">
+                        {dashboard.total_bottles}
                     </p>
 
                 </div>
 
-                <div className="bg-[#1A1F2B] p-6 rounded-xl">
+                <div className="bg-[#1A1F2B] rounded-xl p-6">
 
-                    <h2 className="text-xl font-semibold">
-                        Verified Bottles
-                    </h2>
+                    <h2>Total Scans</h2>
 
-                    <p className="text-4xl mt-4">
-                        {bottles.length}
+                    <p className="text-5xl font-bold mt-4">
+                        {dashboard.total_scans}
                     </p>
 
                 </div>
 
-                <div className="bg-[#1A1F2B] p-6 rounded-xl">
+                <div className="bg-[#1A1F2B] rounded-xl p-6">
 
-                    <h2 className="text-xl font-semibold">
-                        Tampered Bottles
-                    </h2>
+                    <h2>Genuine Scans</h2>
 
-                    <p className="text-4xl mt-4">
-                        0
+                    <p className="text-5xl font-bold mt-4 text-green-400">
+                        {dashboard.genuine_scans}
+                    </p>
+
+                </div>
+
+                <div className="bg-[#1A1F2B] rounded-xl p-6">
+
+                    <h2>Counterfeit</h2>
+
+                    <p className="text-5xl font-bold mt-4 text-red-400">
+                        {dashboard.counterfeit_scans}
                     </p>
 
                 </div>
 
             </div>
 
-            <BottleTable bottles={bottles} />
+            <BottleTable bottles={dashboard.recent_bottles} />
 
         </div>
 
     );
+
 }
 
 export default Dashboard;

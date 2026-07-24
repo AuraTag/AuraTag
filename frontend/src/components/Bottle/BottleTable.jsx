@@ -1,15 +1,21 @@
+import { useNavigate } from "react-router-dom";
+
 function BottleTable({ bottles }) {
+
+    const navigate = useNavigate();
+
     return (
+
         <table className="w-full text-white mt-8 border-collapse">
 
             <thead>
 
                 <tr className="bg-[#1A1F2B]">
 
-                    <th className="p-3">Bottle</th>
-                    <th className="p-3">Brand</th>
-                    <th className="p-3">Batch</th>
-                    <th className="p-3">UID</th>
+                    <th className="p-4 text-left">Bottle</th>
+                    <th className="p-4 text-left">Brand</th>
+                    <th className="p-4 text-left">Batch</th>
+                    <th className="p-4 text-left">NFC UID</th>
 
                 </tr>
 
@@ -21,22 +27,23 @@ function BottleTable({ bottles }) {
 
                     <tr
                         key={bottle.id}
-                        className="border-b border-slate-700"
+                        onClick={() => navigate(`/bottles/${bottle.id}`)}
+                        className="border-b border-slate-700 cursor-pointer hover:bg-[#1E2530] transition"
                     >
 
-                        <td className="p-3">
+                        <td className="p-4">
                             {bottle.bottle_name}
                         </td>
 
-                        <td className="p-3">
+                        <td className="p-4">
                             {bottle.brand}
                         </td>
 
-                        <td className="p-3">
+                        <td className="p-4">
                             {bottle.batch_number}
                         </td>
 
-                        <td className="p-3">
+                        <td className="p-4">
                             {bottle.nfc_uid}
                         </td>
 
@@ -47,7 +54,9 @@ function BottleTable({ bottles }) {
             </tbody>
 
         </table>
+
     );
+
 }
 
 export default BottleTable;

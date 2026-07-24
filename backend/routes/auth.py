@@ -52,20 +52,37 @@ def login():
 
     manufacturer = Manufacturer.query.filter_by(email=email).first()
 
+    # Debug logs
+    print("=" * 50)
+    print("Login Request")
+    print("Email:", email)
+    print("Password:", password)
+    print("Manufacturer Found:", manufacturer)
+
     if manufacturer is None:
+        print("Manufacturer not found")
         return {
             "message": "Invalid email or password"
         }, 401
 
-    if not bcrypt.checkpw(
+    print("Stored Hash:", manufacturer.password_hash)
+
+    password_match = bcrypt.checkpw(
         password.encode(),
         manufacturer.password_hash.encode()
-    ):
+    )
+
+    print("Password Match:", password_match)
+    print("=" * 50)
+
+    if not password_match:
         return {
             "message": "Invalid email or password"
         }, 401
 
-    token = create_access_token(identity=str(manufacturer.id))
+    token = create_access_token(
+        identity=str(manufacturer.id)
+    )
 
     return {
         "message": "Login Successful",

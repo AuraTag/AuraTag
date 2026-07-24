@@ -48,13 +48,51 @@ function BottleDetails() {
         </h1>
 
         {/* Bottle Details Card */}
-        <div className="bg-[#1E2530] rounded-xl p-8 shadow-lg max-w-3xl">
+        <div className="grid grid-cols-2 gap-6">
 
-            ...
-            ...
-            ...
+    <div>
+        <p className="text-slate-400">Bottle Name</p>
+        <h2 className="text-2xl font-semibold">
+            {bottle.bottle_name}
+        </h2>
+    </div>
 
-        </div>
+    <div>
+        <p className="text-slate-400">Brand</p>
+        <h2 className="text-2xl font-semibold">
+            {bottle.brand}
+        </h2>
+    </div>
+
+    <div>
+        <p className="text-slate-400">Batch Number</p>
+        <h2 className="text-xl">
+            {bottle.batch_number}
+        </h2>
+    </div>
+
+    <div>
+        <p className="text-slate-400">Manufacture Date</p>
+        <h2 className="text-xl">
+            {new Date(bottle.manufacture_date).toLocaleDateString()}
+        </h2>
+    </div>
+
+    <div>
+        <p className="text-slate-400">Expiry Date</p>
+        <h2 className="text-xl">
+            {new Date(bottle.expiry_date).toLocaleDateString()}
+        </h2>
+    </div>
+
+    <div>
+        <p className="text-slate-400">NFC UID</p>
+        <h2 className="text-sm break-all text-green-400">
+            {bottle.nfc_uid}
+        </h2>
+    </div>
+
+</div>
 
         {/* 👇 WRITE IT HERE */}
         <div className="mt-8 flex justify-center">
