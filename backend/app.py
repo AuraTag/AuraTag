@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-
+from routes.batch import batch_bp
 from config import Config
 from database import db
 
@@ -9,7 +9,7 @@ from routes.auth import auth_bp
 from routes.bottle import bottle_bp
 from routes.verify import verify_bp
 from routes.dashboard import dashboard_bp
-from models import Manufacturer, Bottle, BottleScan ,Product
+from models import Manufacturer, Bottle, BottleScan ,Product,Batch
 from routes.product import product_bp
 app = Flask(__name__)
 
@@ -33,6 +33,10 @@ app.register_blueprint(
     url_prefix="/api/dashboard"
 )
 app.register_blueprint(product_bp, url_prefix="/api/products")
+app.register_blueprint(
+    batch_bp,
+    url_prefix="/api/batches"
+)
 # --------------------------
 # Create Database Tables
 # --------------------------
@@ -47,5 +51,11 @@ def home():
         "project": "AuraTag Backend"
     }
 
+print("\n========== ROUTES ==========")
+for rule in app.url_map.iter_rules():
+    print(rule)
+print("============================\n")
+
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)
+    print("Starting Flask Server...")
+    app.run(host="127.0.0.1", port=5000, debug=True)

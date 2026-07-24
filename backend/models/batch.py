@@ -2,8 +2,8 @@ from database import db
 from datetime import datetime
 
 
-class Product(db.Model):
-    __tablename__ = "products"
+class Batch(db.Model):
+    __tablename__ = "batches"
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -13,33 +13,31 @@ class Product(db.Model):
         nullable=False
     )
 
-    product_name = db.Column(
-        db.String(150),
+    product_id = db.Column(
+        db.Integer,
+        db.ForeignKey("products.id"),
         nullable=False
     )
 
-    brand = db.Column(
-        db.String(150),
-        nullable=False
-    )
-
-    category = db.Column(
+    batch_number = db.Column(
         db.String(100),
+        unique=True,
         nullable=False
     )
 
-    volume = db.Column(
-        db.String(50),
+    quantity = db.Column(
+        db.Integer,
         nullable=False
     )
 
-    alcohol_percentage = db.Column(
-        db.String(20),
+    manufacture_date = db.Column(
+        db.Date,
         nullable=False
     )
 
-    description = db.Column(
-        db.Text
+    expiry_date = db.Column(
+        db.Date,
+        nullable=False
     )
 
     created_at = db.Column(
@@ -47,8 +45,13 @@ class Product(db.Model):
         default=datetime.utcnow
     )
 
-    # Relationship
+    # Relationships
     manufacturer = db.relationship(
         "Manufacturer",
-        backref="products"
+        backref="batches"
+    )
+
+    product = db.relationship(
+        "Product",
+        backref="batches"
     )
