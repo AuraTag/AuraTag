@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getBottleById } from "../../services/bottleService";
 import QRCodeCard from "../../components/QRCodeCard";
+
 function BottleDetails() {
 
     const { id } = useParams();

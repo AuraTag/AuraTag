@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../services/authService";
 
 function LoginForm() {
-
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -13,25 +12,23 @@ function LoginForm() {
         e.preventDefault();
 
         try {
-
             const data = await login(email, password);
 
+            // Save JWT Token
             localStorage.setItem("token", data.token);
+
+            // Save Company Name (Optional)
             localStorage.setItem("company_name", data.company_name);
 
-            alert("Login Successful");
-
+            // Redirect to Dashboard
             navigate("/dashboard");
 
         } catch (error) {
-
-            alert("Invalid Email or Password");
-
+            alert(error.response?.data?.message || "Login Failed");
         }
     };
 
     return (
-
         <div className="w-full max-w-md bg-[#1E2530] rounded-2xl p-8 shadow-lg">
 
             <h1 className="text-3xl font-bold text-white text-center">
@@ -45,7 +42,6 @@ function LoginForm() {
             <form onSubmit={handleSubmit} className="space-y-5">
 
                 <div>
-
                     <label className="block text-slate-300 mb-2">
                         Email
                     </label>
@@ -55,13 +51,12 @@ function LoginForm() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter Email"
-                        className="w-full rounded-lg bg-[#0F1117] border border-slate-700 p-3 text-white"
+                        required
+                        className="w-full rounded-lg bg-[#0F1117] border border-slate-700 p-3 text-white focus:outline-none focus:border-[#D6B25E]"
                     />
-
                 </div>
 
                 <div>
-
                     <label className="block text-slate-300 mb-2">
                         Password
                     </label>
@@ -71,14 +66,14 @@ function LoginForm() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter Password"
-                        className="w-full rounded-lg bg-[#0F1117] border border-slate-700 p-3 text-white"
+                        required
+                        className="w-full rounded-lg bg-[#0F1117] border border-slate-700 p-3 text-white focus:outline-none focus:border-[#D6B25E]"
                     />
-
                 </div>
 
                 <button
                     type="submit"
-                    className="w-full bg-[#D6B25E] text-black py-3 rounded-lg font-semibold"
+                    className="w-full bg-[#D6B25E] hover:bg-[#E5C97A] text-black py-3 rounded-lg font-semibold transition"
                 >
                     Login
                 </button>
@@ -86,7 +81,6 @@ function LoginForm() {
             </form>
 
         </div>
-
     );
 }
 

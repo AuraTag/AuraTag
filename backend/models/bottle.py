@@ -1,5 +1,7 @@
 from database import db
 from datetime import datetime
+import uuid
+
 
 class Bottle(db.Model):
     __tablename__ = "bottles"
@@ -16,7 +18,12 @@ class Bottle(db.Model):
 
     expiry_date = db.Column(db.Date, nullable=False)
 
-    nfc_uid = db.Column(db.String(200), unique=True, nullable=False)
+    nfc_uid = db.Column(
+        db.String(36),
+        unique=True,
+        nullable=False,
+        default=lambda: str(uuid.uuid4())
+    )
 
     manufacturer_id = db.Column(
         db.Integer,
@@ -24,4 +31,7 @@ class Bottle(db.Model):
         nullable=False
     )
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
