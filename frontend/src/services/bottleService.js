@@ -1,37 +1,19 @@
-import axios from "axios";
+import api from "./api";
 
-const API = axios.create({
-    baseURL: "http://127.0.0.1:5000/api",
-});
-
-// Automatically attach JWT
-API.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-});
-
-// Register Bottle
-export const registerBottle = async (bottleData) => {
-    const response = await API.post("/bottles/register", bottleData);
-    return response.data;
+export const getBottles = async () => {
+  const response = await api.get("/bottles/all");
+  return response.data;
 };
 
-// Get All Bottles
-export const getAllBottles = async () => {
-    const response = await API.get("/bottles/all");
-    return response.data;
+export const getBottle = async (id) => {
+  const response = await api.get(`/bottles/${id}`);
+  return response.data;
 };
 
-// Alias for older components
-export const getBottles = getAllBottles;
+// Alias so both names work
+export const getBottleById = getBottle;
 
-// Get Bottle by ID
-export const getBottleById = async (id) => {
-    const response = await API.get(`/bottles/${id}`);
-    return response.data;
+export const registerBottle = async (data) => {
+  const response = await api.post("/bottles/register", data);
+  return response.data;
 };

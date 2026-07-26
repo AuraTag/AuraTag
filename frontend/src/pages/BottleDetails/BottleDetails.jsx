@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getBottleById } from "../../services/bottleService";
+import { getBottle } from "../../services/bottleService";
 import QRCodeCard from "../../components/QRCodeCard";
 
 function BottleDetails() {
@@ -17,7 +17,7 @@ function BottleDetails() {
 
         try {
 
-            const data = await getBottleById(id);
+            const data = await getBottle(id);
 
             setBottle(data);
 

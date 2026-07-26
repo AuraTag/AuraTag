@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import {
   LayoutDashboard,
-  PackagePlus,
   Package,
+  Boxes,
+  PackagePlus,
   History,
   BarChart3,
   LogOut,
@@ -18,6 +19,7 @@ function Sidebar() {
 
       <nav className="flex flex-col gap-4">
 
+        {/* Dashboard */}
         <Link
           to="/dashboard"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#1E2530] hover:text-[#D6B25E] transition"
@@ -26,6 +28,25 @@ function Sidebar() {
           Dashboard
         </Link>
 
+        {/* Products */}
+        <Link
+          to="/products"
+          className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#1E2530] hover:text-[#D6B25E] transition"
+        >
+          <Package size={20} />
+          Products
+        </Link>
+
+        {/* Batches */}
+        <Link
+          to="/batches"
+          className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#1E2530] hover:text-[#D6B25E] transition"
+        >
+          <Boxes size={20} />
+          Batches
+        </Link>
+
+        {/* Register Bottle */}
         <Link
           to="/register-bottle"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#1E2530] hover:text-[#D6B25E] transition"
@@ -34,6 +55,7 @@ function Sidebar() {
           Register Bottle
         </Link>
 
+        {/* Bottle List */}
         <Link
           to="/bottles"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#1E2530] hover:text-[#D6B25E] transition"
@@ -42,6 +64,7 @@ function Sidebar() {
           Bottle List
         </Link>
 
+        {/* Verification History */}
         <Link
           to="/history"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#1E2530] hover:text-[#D6B25E] transition"
@@ -50,6 +73,7 @@ function Sidebar() {
           Verification History
         </Link>
 
+        {/* Analytics */}
         <Link
           to="/analytics"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#1E2530] hover:text-[#D6B25E] transition"
@@ -62,9 +86,7 @@ function Sidebar() {
 
       <div className="mt-auto">
 
-        <button
-          className="flex items-center gap-3 p-3 text-red-400 hover:text-red-300 transition"
-        >
+        <button className="flex items-center gap-3 p-3 text-red-400 hover:text-red-300 transition">
           <LogOut size={20} />
           Logout
         </button>

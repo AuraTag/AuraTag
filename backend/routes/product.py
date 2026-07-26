@@ -10,28 +10,36 @@ product_bp = Blueprint("product", __name__)
 @product_bp.route("/", methods=["POST"])
 @jwt_required()
 def create_product():
+    try:
+        data = request.get_json()
 
-    data = request.get_json()
+        manufacturer_id = int(get_jwt_identity())
 
-    manufacturer_id = int(get_jwt_identity())
+        product = Product(
+            manufacturer_id=manufacturer_id,
+            product_name=data["product_name"],
+            brand=data["brand"],
+            category=data["category"],
+            volume=data["volume"],
+            alcohol_percentage=data["alcohol_percentage"],
+            description=data.get("description", "")
+        )
 
-    product = Product(
-        manufacturer_id=manufacturer_id,
-        product_name=data["product_name"],
-        brand=data["brand"],
-        category=data["category"],
-        volume=data["volume"],
-        alcohol_percentage=data["alcohol_percentage"],
-        description=data.get("description", "")
-    )
+        db.session.add(product)
+        db.session.commit()
 
-    db.session.add(product)
-    db.session.commit()
+        return {
+            "message": "Product created successfully",
+            "product_id": product.id
+        }, 201
 
-    return {
-        "message": "Product created successfully",
-        "product_id": product.id
-    }, 201
+    except Exception as e:
+        db.session.rollback()
+        print("PRODUCT ERROR:", e)
+
+        return {
+            "error": str(e)
+        }, 500
 
 
 @product_bp.route("/", methods=["GET"])
@@ -47,7 +55,6 @@ def get_products():
     result = []
 
     for product in products:
-
         result.append({
             "id": product.id,
             "product_name": product.product_name,

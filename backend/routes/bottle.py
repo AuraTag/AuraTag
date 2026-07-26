@@ -51,15 +51,25 @@ def register_bottle():
 @jwt_required()
 def get_bottles():
 
-    manufacturer_id = get_jwt_identity()
+    manufacturer_id = int(get_jwt_identity())
+
+    print("Logged in Manufacturer ID:", manufacturer_id)
 
     bottles = Bottle.query.filter_by(
         manufacturer_id=manufacturer_id
     ).all()
 
+    print("Total Bottles Found:", len(bottles))
+
     result = []
 
     for bottle in bottles:
+        print(
+            bottle.id,
+            bottle.bottle_name,
+            bottle.manufacturer_id
+        )
+
         result.append({
             "id": bottle.id,
             "bottle_name": bottle.bottle_name,
@@ -69,31 +79,3 @@ def get_bottles():
         })
 
     return result, 200
-
-
-@bottle_bp.route("/<int:id>", methods=["GET"])
-@jwt_required()
-def get_bottle(id):
-
-    manufacturer_id = get_jwt_identity()
-
-    bottle = Bottle.query.filter_by(
-        id=id,
-        manufacturer_id=manufacturer_id
-    ).first()
-
-    if bottle is None:
-        return {
-            "message": "Bottle not found"
-        }, 404
-
-    return {
-        "id": bottle.id,
-        "bottle_name": bottle.bottle_name,
-        "brand": bottle.brand,
-        "batch_number": bottle.batch_number,
-        "manufacture_date": bottle.manufacture_date,
-        "expiry_date": bottle.expiry_date,
-        "nfc_uid": bottle.nfc_uid,
-        "manufacturer_id": bottle.manufacturer_id
-    }, 200
