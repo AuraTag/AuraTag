@@ -1,4 +1,5 @@
 import axios from "axios";
+import api from "./api";
 
 const API = "http://127.0.0.1:5000/api/verify";
 
@@ -9,3 +10,5 @@ export const verifyBottle = async (uid) => {
     return response.data;
 
 };
+
+
