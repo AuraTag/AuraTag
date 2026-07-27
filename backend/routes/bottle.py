@@ -1,6 +1,8 @@
 from flask import Blueprint, request
 from database import db
+from datetime import datetime
 from models.bottle import Bottle
+from database import db
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 bottle_bp = Blueprint("bottle", __name__)
@@ -79,3 +81,29 @@ def get_bottles():
         })
 
     return result, 200
+@bottle_bp.route("/open/<string:uid>", methods=["POST"])
+def open_bottle(uid):
+    bottle = Bottle.query.filter_by(nfc_uid=uid).first()
+
+    if not bottle:
+        return {
+            "success": False,
+            "message": "Bottle not found"
+        }, 404
+
+    if bottle.is_opened:
+        return {
+            "success": False,
+            "message": "Bottle is already opened"
+        }, 400
+
+    bottle.is_opened = True
+    bottle.opened_at = datetime.utcnow()
+
+    db.session.commit()
+
+    return {
+        "success": True,
+        "message": "Bottle marked as opened",
+        "opened_at": bottle.opened_at.strftime("%Y-%m-%d %H:%M:%S")
+    }, 200
