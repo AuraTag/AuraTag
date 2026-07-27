@@ -11,6 +11,7 @@ from routes.verify import verify_bp
 from routes.dashboard import dashboard_bp
 from models import Manufacturer, Bottle, BottleScan ,Product,Batch
 from routes.product import product_bp
+from routes.verify import verify_bp
 app = Flask(__name__)
 
 app.config.from_object(Config)
@@ -37,6 +38,7 @@ app.register_blueprint(
     batch_bp,
     url_prefix="/api/batches"
 )
+
 # --------------------------
 # Create Database Tables
 # --------------------------
