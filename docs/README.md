@@ -259,7 +259,40 @@ Department of Computer Science & Engineering (AI & ML)
 Vishnu Institute of Technology
 
 ---
+# Current Features
 
+## Authentication
+
+- Manufacturer Login
+- JWT Authentication
+
+## Product Management
+
+- Create Products
+- Manage Products
+
+## Batch Management
+
+- Create Batches
+- Track Production
+
+## Bottle Management
+
+- Register Bottles
+- NFC UID Generation
+- Bottle Status Tracking
+
+## Verification
+
+- Public Verification Page
+- Genuine Detection
+- Counterfeit Detection
+- Opened Bottle Detection
+
+## Reports
+
+- Inventory PDF
+- Verification Logs
 # License
 
 MIT License

@@ -1,87 +1,75 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { verifyBottle } from "../../services/verifyService";
+import api from "../../services/api";
 
 function Verify() {
   const { uid } = useParams();
 
-  const [bottle, setBottle] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [bottle, setBottle] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    loadBottle();
+    fetchBottle();
   }, []);
 
-  const loadBottle = async () => {
+  const fetchBottle = async () => {
     try {
-      const data = await verifyBottle(uid);
-      setBottle(data);
+      const res = await api.get(`/verify/${uid}`);
+      setBottle(res.data);
     } catch (err) {
-      console.error(err);
-      setBottle(null);
+      setError(err.response?.data?.message || "Verification failed.");
     } finally {
       setLoading(false);
     }
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-2xl">
-        Loading...
-      </div>
-    );
+    return <h2 className="text-center mt-10">Verifying Bottle...</h2>;
   }
 
-  if (!bottle) {
+  if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-red-600 text-3xl font-bold">
-        ❌ Bottle Not Found
+      <div className="text-center mt-10">
+        <h1 className="text-red-600 text-3xl font-bold">
+          ❌ Counterfeit Bottle
+        </h1>
+        <p>{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+    <div className="max-w-2xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-lg">
+      <h1 className="text-3xl font-bold text-center mb-6">
+        AuraTag Verification
+      </h1>
 
-      <div className="bg-white rounded-xl shadow-xl p-8 w-[600px]">
-
-        <h1 className="text-4xl font-bold text-green-600 mb-6 text-center">
-          ✔ Genuine Product
-        </h1>
-
-        <div className="space-y-3">
-
-          <p><b>Bottle :</b> {bottle.bottle_name}</p>
-
-          <p><b>Brand :</b> {bottle.brand}</p>
-
-          <p><b>Batch :</b> {bottle.batch_number}</p>
-
-          <p><b>Manufactured :</b> {bottle.manufacture_date}</p>
-
-          <p><b>Expiry :</b> {bottle.expiry_date}</p>
-
-          <p>
-            <b>Status :</b>{" "}
-            {bottle.is_opened
-              ? "🟠 Already Opened"
-              : "🟢 Factory Sealed"}
-          </p>
-
-          <p>
-            <b>Verification Count :</b>{" "}
-            {bottle.verification_count}
-          </p>
-
-          <p>
-            <b>Last Verified :</b>{" "}
-            {bottle.last_verified}
-          </p>
-
-        </div>
-
+      <div className="text-center mb-6">
+        {bottle.is_opened ? (
+          <h2 className="text-orange-600 text-2xl font-bold">
+            🟠 Already Opened
+          </h2>
+        ) : (
+          <h2 className="text-green-600 text-2xl font-bold">
+            ✅ Genuine Product
+          </h2>
+        )}
       </div>
 
+      <div className="space-y-3">
+        <p><strong>Bottle:</strong> {bottle.bottle_name}</p>
+        <p><strong>Brand:</strong> {bottle.brand}</p>
+        <p><strong>Batch:</strong> {bottle.batch_number}</p>
+        <p><strong>Manufactured:</strong> {bottle.manufacture_date}</p>
+        <p><strong>Expiry:</strong> {bottle.expiry_date}</p>
+        <p><strong>Verification Count:</strong> {bottle.verification_count}</p>
+        <p><strong>Last Verified:</strong> {bottle.last_verified}</p>
+      </div>
+
+      <div className="mt-8 text-center text-gray-500">
+        Protected by AuraTag
+      </div>
     </div>
   );
 }

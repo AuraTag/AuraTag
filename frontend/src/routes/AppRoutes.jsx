@@ -9,6 +9,9 @@ import RegisterBottle from "../pages/RegisterBottle/RegisterBottle";
 import BottleList from "../pages/BottleList/BottleList";
 import BottleDetails from "../pages/BottleDetails/BottleDetails";
 import Verify from "../pages/Verify/Verify";
+import VerificationHistory from "../pages/VerificationHistory/VerificationHistory";
+import Profile from "../pages/Profile/Profile";
+import Reports from "../pages/Reports/Reports";
 
 function AppRoutes() {
   return (
@@ -53,6 +56,20 @@ function AppRoutes() {
           path="/verify/:uid"
           element={<Verify />}
         />
+        <Route
+    path="/verification-history"
+    element={<VerificationHistory />}
+/>
+
+    {/* Profile */}
+<Route
+  path="/profile"
+  element={<Profile />}
+/>
+<Route
+  path="/reports"
+  element={<Reports />}
+/>
 
       </Routes>
     </BrowserRouter>

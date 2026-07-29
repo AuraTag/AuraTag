@@ -4,13 +4,11 @@ import "./Sidebar.css";
 export default function Sidebar() {
   return (
     <div className="sidebar">
-
       <div className="logo">
         <h2>AuraTag</h2>
       </div>
 
       <nav>
-
         <NavLink to="/dashboard">
           🏠 Dashboard
         </NavLink>
@@ -31,12 +29,18 @@ export default function Sidebar() {
           📱 Verification
         </NavLink>
 
+        <NavLink to="/verification-history">
+          📜 Verification History
+        </NavLink>
+
+        <NavLink to="/profile">
+          👤 Profile
+        </NavLink>
+
         <NavLink to="/analytics">
           📊 Analytics
         </NavLink>
-
       </nav>
-
     </div>
   );
 }
